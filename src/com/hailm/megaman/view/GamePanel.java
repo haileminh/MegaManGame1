@@ -6,18 +6,24 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class GamePanel extends BasePanel implements Runnable {
+    private boolean IS_RUNNING;
     private Thread thread;
 
     private KeyListener keyListener;
-
-    private boolean IS_RUNNING;
 
     private InputManager inputManager;
 
     public GamePanel() {
         inputManager = new InputManager();
+        
+   
     }
 
     @Override
@@ -48,7 +54,6 @@ public class GamePanel extends BasePanel implements Runnable {
             @Override
             public void keyTyped(KeyEvent e) {
                 // TODO Auto-generated method stub
-
             }
 
         };
@@ -64,6 +69,8 @@ public class GamePanel extends BasePanel implements Runnable {
 
         graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
+        
+     
     }
 
     public void startGame() {
