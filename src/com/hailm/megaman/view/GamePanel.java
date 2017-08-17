@@ -7,14 +7,6 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import com.hailm.megaman.manager.Animation;
-import com.hailm.megaman.manager.CacheDataLoader;
-import com.hailm.megaman.manager.FrameImage;
 
 public class GamePanel extends BasePanel implements Runnable {
     private boolean IS_RUNNING;
@@ -25,16 +17,16 @@ public class GamePanel extends BasePanel implements Runnable {
 
     private InputManager inputManager;
 
-    FrameImage frame1;
+    private BufferedImage bufImage;
 
-    Animation animation1;
+    private Graphics2D bufG2d;
 
     public GamePanel() {
         inputManager = new InputManager();
 
-        frame1 = CacheDataLoader.getInstance().getFrameImage("idleshoot1");
-        animation1 = CacheDataLoader.getInstance().getAnimation("boss_idle");
-        animation1.flipAllImage();
+        bufImage = new BufferedImage(Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME,
+                BufferedImage.TYPE_INT_ARGB);
+
     }
 
     @Override
@@ -77,14 +69,27 @@ public class GamePanel extends BasePanel implements Runnable {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D graphics2d = (Graphics2D) g;
-
-        graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        // Graphics2D graphics2d = (Graphics2D) g;
         
-        frame1.draw(graphics2d, 100, 130);
-        animation1.update(System.nanoTime());
-        animation1.draw(graphics2d, 300, 300);
+        g.drawImage(bufImage, 0, 0, this);
+    }
+
+    public void renderGame() {
+        if (bufImage == null) {
+            bufImage = new BufferedImage(Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME,
+                    BufferedImage.TYPE_INT_ARGB);
+        }
+
+        if (bufImage != null) {
+            bufG2d = (Graphics2D) bufImage.getGraphics();
+        }
+
+        if (bufG2d != null) {
+            bufG2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            bufG2d.setColor(Color.RED);
+            bufG2d.fillRect(40, 50, 100, 100);
+        }
     }
 
     public void startGame() {
@@ -107,8 +112,9 @@ public class GamePanel extends BasePanel implements Runnable {
         while (IS_RUNNING) {
 
             // update game
-            // render game
             
+            renderGame();
+
             repaint();
 
             long deltaTime = System.nanoTime() - beginTime;
