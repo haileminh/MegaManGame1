@@ -190,19 +190,23 @@ public class Animation {
             return false;
     }
 
-    public void flipImage() {
+    public void flipAllImage() {
+
         for (int i = 0; i < frameImages.size(); i++) {
+
             BufferedImage image = frameImages.get(i).getImage();
 
-            AffineTransform affineTransform = AffineTransform
-                    .getScaleInstance(-1, 1);
-            affineTransform.translate(-image.getWidth(), 0);
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-image.getWidth(), 0);
 
-            AffineTransformOp op = new AffineTransformOp(affineTransform,
+            AffineTransformOp op = new AffineTransformOp(tx,
                     AffineTransformOp.TYPE_BILINEAR);
-
             image = op.filter(image, null);
+
+            frameImages.get(i).setImage(image);
+
         }
+
     }
 
     public void draw(Graphics2D graphics2d, int x, int y) {

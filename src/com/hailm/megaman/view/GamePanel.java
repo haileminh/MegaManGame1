@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.hailm.megaman.manager.Animation;
+import com.hailm.megaman.manager.CacheDataLoader;
 import com.hailm.megaman.manager.FrameImage;
 
 public class GamePanel extends BasePanel implements Runnable {
@@ -24,8 +25,16 @@ public class GamePanel extends BasePanel implements Runnable {
 
     private InputManager inputManager;
 
+    FrameImage frame1;
+
+    Animation animation1;
+
     public GamePanel() {
         inputManager = new InputManager();
+
+        frame1 = CacheDataLoader.getInstance().getFrameImage("idleshoot1");
+        animation1 = CacheDataLoader.getInstance().getAnimation("boss_idle");
+        animation1.flipAllImage();
     }
 
     @Override
@@ -36,7 +45,7 @@ public class GamePanel extends BasePanel implements Runnable {
 
     @Override
     public void addComponents() {
-        
+
         startGame();
     }
 
@@ -72,7 +81,10 @@ public class GamePanel extends BasePanel implements Runnable {
 
         graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
+        
+        frame1.draw(graphics2d, 100, 130);
+        animation1.update(System.nanoTime());
+        animation1.draw(graphics2d, 300, 300);
     }
 
     public void startGame() {
@@ -96,6 +108,7 @@ public class GamePanel extends BasePanel implements Runnable {
 
             // update game
             // render game
+            
             repaint();
 
             long deltaTime = System.nanoTime() - beginTime;
@@ -105,7 +118,7 @@ public class GamePanel extends BasePanel implements Runnable {
                 if (sleepTime > 0) {
                     Thread.sleep(sleepTime / 1000000);
                 } else {
-                    Thread.sleep(sleepTime / 2000000);
+                    Thread.sleep(period / 2000000);
                 }
 
             } catch (InterruptedException e) {
