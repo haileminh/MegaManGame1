@@ -24,36 +24,8 @@ public class GamePanel extends BasePanel implements Runnable {
 
     private InputManager inputManager;
 
-    FrameImage fram1, frame2, fram3;
-
-    Animation animation;
-
     public GamePanel() {
         inputManager = new InputManager();
-
-        BufferedImage image;
-        try {
-            image = ImageIO
-                    .read(new File("src/res/drawable/images/megasprite.png"));
-            BufferedImage image1 = image.getSubimage(529, 40, 80, 100);
-            fram1 = new FrameImage("frame1", image1);
-
-            BufferedImage image2 = image.getSubimage(616, 40, 80, 100);
-            frame2 = new FrameImage("frame2", image2);
-
-            BufferedImage image3 = image.getSubimage(704, 40, 80, 100);
-            fram3 = new FrameImage("frame3", image3);
-
-            animation = new Animation();
-            animation.add(fram1, 200 * 1000000);
-            animation.add(frame2, 200 * 1000000);
-            animation.add(fram3, 200 * 1000000);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
 
     @Override
@@ -64,6 +36,7 @@ public class GamePanel extends BasePanel implements Runnable {
 
     @Override
     public void addComponents() {
+        
         startGame();
     }
 
@@ -99,9 +72,7 @@ public class GamePanel extends BasePanel implements Runnable {
 
         graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        animation.update(System.nanoTime());
-        animation.draw(graphics2d, 100, 130);
+
     }
 
     public void startGame() {
@@ -126,7 +97,7 @@ public class GamePanel extends BasePanel implements Runnable {
             // update game
             // render game
             repaint();
-            
+
             long deltaTime = System.nanoTime() - beginTime;
             sleepTime = period - deltaTime;
 

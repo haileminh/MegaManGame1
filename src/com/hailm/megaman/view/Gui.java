@@ -1,8 +1,11 @@
 package com.hailm.megaman.view;
 
 import java.awt.CardLayout;
+import java.io.IOException;
 
 import javax.swing.JFrame;
+
+import com.hailm.megaman.manager.CacheDataLoader;
 
 public class Gui extends JFrame implements SetUp {
 
@@ -30,6 +33,13 @@ public class Gui extends JFrame implements SetUp {
 
     @Override
     public void addComponents() {
+        try {
+            CacheDataLoader.getInstance().loadData();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         gamePanel = new GamePanel();
         add(gamePanel);
     }

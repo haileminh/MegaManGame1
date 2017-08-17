@@ -9,6 +9,11 @@ public class FrameImage {
 
     private BufferedImage image;
 
+    public FrameImage() {
+        this.name = null;
+        this.image = null;
+    }
+
     public FrameImage(String name, BufferedImage image) {
         this.name = name;
         this.image = image;
@@ -18,8 +23,8 @@ public class FrameImage {
         image = new BufferedImage(frameImage.getImageWidth(),
                 frameImage.getImageHeight(), frameImage.image.getType());
         Graphics g = image.getGraphics();
-        g.drawImage(frameImage.getImage(), 0, 0, null);
-        // name = frameImage.name;
+        g.drawImage(frameImage.image, 0, 0, null);
+        name = frameImage.name;
     }
 
     public void draw(Graphics2D graphics2d, int x, int y) {
