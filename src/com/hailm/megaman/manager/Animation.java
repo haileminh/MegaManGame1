@@ -85,10 +85,11 @@ public class Animation {
     }
 
     public void setCurrentFrame(int currentFrame) {
-        if (currentFrame >= 0 && currentFrame < frameImages.size())
+        if (currentFrame >= 0 && currentFrame < frameImages.size()) {
             this.currentFrame = currentFrame;
-        else
+        } else {
             this.currentFrame = 0;
+        }
     }
 
     public List<Boolean> getIgnoreFrames() {
@@ -170,36 +171,37 @@ public class Animation {
     }
 
     private void nextFrame() {
-        if (currentFrame >= frameImages.size() - 1)
+        if (currentFrame >= frameImages.size() - 1) {
             if (isRepeated)
                 currentFrame = 0;
-            else
-                currentFrame++;
+        } else {
+            currentFrame++;
+        }
 
-        if (ignoreFrames.get(currentFrame))
+        if (ignoreFrames.get(currentFrame)) {
             nextFrame();
+        }
     }
 
     public boolean isLastFrame() {
         if (currentFrame == frameImages.size() - 1)
             return true;
-        return false;
+        else
+            return false;
     }
 
-    public void flipAllImage() {
+    public void flipImage() {
         for (int i = 0; i < frameImages.size(); i++) {
-
             BufferedImage image = frameImages.get(i).getImage();
 
-            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-            tx.translate(-image.getWidth(), 0);
+            AffineTransform affineTransform = AffineTransform
+                    .getScaleInstance(-1, 1);
+            affineTransform.translate(-image.getWidth(), 0);
 
-            AffineTransformOp op = new AffineTransformOp(tx,
+            AffineTransformOp op = new AffineTransformOp(affineTransform,
                     AffineTransformOp.TYPE_BILINEAR);
+
             image = op.filter(image, null);
-
-            frameImages.get(i).setImage(image);
-
         }
     }
 
@@ -207,10 +209,12 @@ public class Animation {
         BufferedImage image = getCurrentImage();
 
         graphics2d.drawImage(image, x - image.getWidth() / 2,
-                y - image.getHeight(), null);
-        if (drawRectFrame)
-            graphics2d.drawRect(x - image.getWidth(), y - image.getHeight(),
-                    image.getWidth(), image.getHeight());
+                y - image.getHeight() / 2, null);
 
+        if (drawRectFrame) {
+            graphics2d.drawRect(x - image.getWidth() / 2,
+                    x - image.getWidth() / 2, image.getWidth(),
+                    image.getHeight());
+        }
     }
 }
