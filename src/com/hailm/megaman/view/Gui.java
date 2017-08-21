@@ -8,31 +8,35 @@ import javax.swing.JFrame;
 import com.hailm.megaman.manager.CacheDataLoader;
 
 public class Gui extends JFrame implements SetUp {
+    private GamePanel gamePanel;
 
     public static final int WIDTH_FRAME = 1000;
 
     public static final int HEIGHT_FRAME = 600;
 
-    private GamePanel gamePanel;
-
     public Gui() {
-        initsComponents();
+        initcomponents();
         addComponents();
         registerListener();
     }
 
     @Override
-    public void initsComponents() {
-        setTitle("Test game");
-        setResizable(false);
+    public void initcomponents() {
+        setTitle("Test Game.");
         setLayout(new CardLayout());
+        setResizable(false);
         setSize(WIDTH_FRAME, HEIGHT_FRAME);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    public void startGame() {
+        gamePanel.startGame();
+    }
+
     @Override
     public void addComponents() {
+        
         try {
             CacheDataLoader.getInstance().loadData();
         } catch (IOException e) {

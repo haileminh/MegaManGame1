@@ -3,12 +3,19 @@ package com.hailm.megaman.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
+import com.hailm.megaman.manager.Animation;
+import com.hailm.megaman.manager.CacheDataLoader;
+import com.hailm.megaman.manager.FrameImage;
+import com.hailm.megaman.manager.GameManager;
+import com.hailm.megaman.model.MegaMan;
+import com.hailm.megaman.model.PhysicalMap;
+
 public class GamePanel extends BasePanel implements Runnable {
+
     private boolean IS_RUNNING;
 
     private Thread thread;
@@ -19,32 +26,40 @@ public class GamePanel extends BasePanel implements Runnable {
 
     private BufferedImage bufImage;
 
-    private Graphics2D bufG2d;
+    private Graphics2D bufG2D;
+
+    public GameManager gameManager;
+
+    FrameImage frame1;
+
+    Animation animation1;
 
     public GamePanel() {
-        inputManager = new InputManager();
-
+        gameManager = new GameManager();
+        inputManager = new InputManager(gameManager);
         bufImage = new BufferedImage(Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME,
                 BufferedImage.TYPE_INT_ARGB);
 
+        frame1 = CacheDataLoader.getInstance().getFrameImage("idleshoot1");
+        animation1 = CacheDataLoader.getInstance().getAnimation("boss_idle");
+        animation1.flipAllImage();
     }
 
     @Override
-    public void initsComponents() {
+    public void initcomponents() {
         setLayout(null);
         setBackground(Color.WHITE);
     }
 
     @Override
     public void addComponents() {
+        // TODO Auto-generated method stub
 
-        startGame();
     }
 
     @Override
     public void registerListener() {
         keyListener = new KeyListener() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 inputManager.processKeyPressed(e.getKeyCode());
@@ -58,20 +73,24 @@ public class GamePanel extends BasePanel implements Runnable {
             @Override
             public void keyTyped(KeyEvent e) {
                 // TODO Auto-generated method stub
+
             }
 
         };
         setFocusable(true);
         addKeyListener(keyListener);
-
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Graphics2D graphics2d = (Graphics2D) g;
-        
         g.drawImage(bufImage, 0, 0, this);
+
+    }
+
+    public void updateGame() {
+        gameManager.update();
     }
 
     public void renderGame() {
@@ -81,14 +100,23 @@ public class GamePanel extends BasePanel implements Runnable {
         }
 
         if (bufImage != null) {
-            bufG2d = (Graphics2D) bufImage.getGraphics();
+            bufG2D = (Graphics2D) bufImage.getGraphics();
         }
 
-        if (bufG2d != null) {
-            bufG2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-            bufG2d.setColor(Color.RED);
-            bufG2d.fillRect(40, 50, 100, 100);
+        if (bufG2D != null) {
+
+            bufG2D.setColor(Color.WHITE);
+            bufG2D.fillRect(0, 0, Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME);
+
+            // draw objects game here
+            // megaman.draw(bufG2D);
+
+            // frame1.draw(bufG2D, 100, 130);
+            // animation1.update(System.nanoTime());
+            // animation1.draw(bufG2D, 300, 300);
+
+            gameManager.render(bufG2D);
+
         }
     }
 
@@ -102,8 +130,7 @@ public class GamePanel extends BasePanel implements Runnable {
 
     @Override
     public void run() {
-
-        long FPS = 80; // số frame trên 1s
+        long FPS = 80;
         long period = 1000 * 1000000 / FPS;
         long beginTime;
         long sleepTime;
@@ -111,8 +138,7 @@ public class GamePanel extends BasePanel implements Runnable {
         beginTime = System.nanoTime();
         while (IS_RUNNING) {
 
-            // update game
-            
+            updateGame();
             renderGame();
 
             repaint();
@@ -121,17 +147,15 @@ public class GamePanel extends BasePanel implements Runnable {
             sleepTime = period - deltaTime;
 
             try {
-                if (sleepTime > 0) {
+                if (sleepTime > 0)
                     Thread.sleep(sleepTime / 1000000);
-                } else {
+                else
                     Thread.sleep(period / 2000000);
-                }
-
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch (InterruptedException ex) {
             }
+
             beginTime = System.nanoTime();
+
         }
     }
 

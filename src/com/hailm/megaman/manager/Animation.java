@@ -25,20 +25,22 @@ public class Animation {
     private boolean drawRectFrame;
 
     public Animation() {
-        frameImages = new ArrayList<>();
-        ignoreFrames = new ArrayList<>();
-        delayFrames = new ArrayList<>();
-        currentFrame = 0;
+        delayFrames = new ArrayList<Double>();
+        ignoreFrames = new ArrayList<Boolean>();
+        frameImages = new ArrayList<FrameImage>();
+
         beginTime = 0;
-        isRepeated = true;
+        currentFrame = 0;
         drawRectFrame = false;
+        isRepeated = true;
     }
 
     public Animation(Animation animation) {
+
         beginTime = animation.beginTime;
         currentFrame = animation.currentFrame;
-        isRepeated = animation.isRepeated;
         drawRectFrame = animation.drawRectFrame;
+        isRepeated = animation.isRepeated;
 
         delayFrames = new ArrayList<Double>();
         for (Double d : animation.delayFrames) {
@@ -46,13 +48,13 @@ public class Animation {
         }
 
         ignoreFrames = new ArrayList<Boolean>();
-        for (Boolean b : animation.ignoreFrames) {
+        for (boolean b : animation.ignoreFrames) {
             ignoreFrames.add(b);
         }
 
         frameImages = new ArrayList<FrameImage>();
         for (FrameImage f : animation.frameImages) {
-            frameImages.add(f);
+            frameImages.add(new FrameImage(f));
         }
     }
 
@@ -68,7 +70,7 @@ public class Animation {
         return isRepeated;
     }
 
-    public void setRepeated(boolean isRepeated) {
+    public void setIsRepeated(boolean isRepeated) {
         this.isRepeated = isRepeated;
     }
 
@@ -76,7 +78,7 @@ public class Animation {
         return frameImages;
     }
 
-    public void setFrameImages(List<FrameImage> frameImages) {
+    public void setFrameImages(ArrayList<FrameImage> frameImages) {
         this.frameImages = frameImages;
     }
 
@@ -85,18 +87,17 @@ public class Animation {
     }
 
     public void setCurrentFrame(int currentFrame) {
-        if (currentFrame >= 0 && currentFrame < frameImages.size()) {
+        if (currentFrame >= 0 && currentFrame < frameImages.size())
             this.currentFrame = currentFrame;
-        } else {
+        else
             this.currentFrame = 0;
-        }
     }
 
     public List<Boolean> getIgnoreFrames() {
         return ignoreFrames;
     }
 
-    public void setIgnoreFrames(List<Boolean> ignoreFrames) {
+    public void setIgnoreFrames(ArrayList<Boolean> ignoreFrames) {
         this.ignoreFrames = ignoreFrames;
     }
 
@@ -104,7 +105,7 @@ public class Animation {
         return delayFrames;
     }
 
-    public void setDelayFrames(List<Double> delayFrames) {
+    public void setDelayFrames(ArrayList<Double> delayFrames) {
         this.delayFrames = delayFrames;
     }
 
@@ -129,15 +130,13 @@ public class Animation {
     }
 
     public void setIgnoreFrame(int id) {
-        if (id >= 0 && id < ignoreFrames.size()) {
+        if (id >= 0 && id < ignoreFrames.size())
             ignoreFrames.set(id, true);
-        }
     }
 
     public void unIgnoreFrame(int id) {
-        if (id >= 0 && id < ignoreFrames.size()) {
+        if (id >= 0 && id < ignoreFrames.size())
             ignoreFrames.set(id, false);
-        }
     }
 
     public void reset() {
@@ -150,9 +149,11 @@ public class Animation {
     }
 
     public void add(FrameImage frameImage, double timeToNextFrame) {
+
         ignoreFrames.add(false);
         frameImages.add(frameImage);
         delayFrames.add(new Double(timeToNextFrame));
+
     }
 
     public BufferedImage getCurrentImage() {
@@ -160,27 +161,31 @@ public class Animation {
     }
 
     public void update(long currentTime) {
-        if (beginTime == 0) {
+
+        if (beginTime == 0)
             beginTime = currentTime;
-        } else {
+        else {
+
             if (currentTime - beginTime > delayFrames.get(currentFrame)) {
                 nextFrame();
                 beginTime = currentTime;
             }
         }
+
     }
 
     private void nextFrame() {
+
         if (currentFrame >= frameImages.size() - 1) {
+
             if (isRepeated)
                 currentFrame = 0;
-        } else {
+        } else
             currentFrame++;
-        }
 
-        if (ignoreFrames.get(currentFrame)) {
+        if (ignoreFrames.get(currentFrame))
             nextFrame();
-        }
+
     }
 
     public boolean isLastFrame() {
@@ -209,16 +214,16 @@ public class Animation {
 
     }
 
-    public void draw(Graphics2D graphics2d, int x, int y) {
+    public void draw(Graphics2D g2, int x, int y) {
+
         BufferedImage image = getCurrentImage();
 
-        graphics2d.drawImage(image, x - image.getWidth() / 2,
-                y - image.getHeight() / 2, null);
+        g2.drawImage(image, x - image.getWidth() / 2, y - image.getHeight() / 2,
+                null);
+        if (drawRectFrame)
+            g2.drawRect(x - image.getWidth() / 2, x - image.getWidth() / 2,
+                    image.getWidth(), image.getHeight());
 
-        if (drawRectFrame) {
-            graphics2d.drawRect(x - image.getWidth() / 2,
-                    x - image.getWidth() / 2, image.getWidth(),
-                    image.getHeight());
-        }
     }
+
 }

@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 public abstract class BasePanel extends JPanel implements SetUp {
     public BasePanel() {
-        initsComponents();
+        initcomponents();
         addComponents();
         registerListener();
     }

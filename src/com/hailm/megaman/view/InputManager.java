@@ -2,55 +2,78 @@ package com.hailm.megaman.view;
 
 import java.awt.event.KeyEvent;
 
+import com.hailm.megaman.manager.GameManager;
+import com.hailm.megaman.model.MegaMan;
+
 public class InputManager {
+
+    private GameManager gameManager;
+
+    public InputManager(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
     public void processKeyPressed(int keyCode) {
 
         switch (keyCode) {
+
         case KeyEvent.VK_UP:
-            System.out.println("You press UP");
             break;
+
         case KeyEvent.VK_DOWN:
-            System.out.println("You press DOWN");
             break;
+
         case KeyEvent.VK_LEFT:
-            System.out.println("You press LEFT");
+            gameManager.megaman.setDirection(MegaMan.DIR_LEFT);
+            gameManager.megaman.setSpeedX(-1);
+
+            gameManager.physicalMap.posX -= 3;
             break;
         case KeyEvent.VK_RIGHT:
-            System.out.println("You press RIGHT");
+            gameManager.megaman.setDirection(MegaMan.DIR_RIGHT);
+            gameManager.megaman.setSpeedX(1);
+            gameManager.physicalMap.posX += 3;
             break;
+
         case KeyEvent.VK_ENTER:
 
             break;
-        case KeyEvent.VK_SPACE:
 
+        case KeyEvent.VK_SPACE:
+            gameManager.megaman.setSpeedY(-3);
+            gameManager.megaman.setPosY(gameManager.megaman.getPosY() - 3);
             break;
         case KeyEvent.VK_A:
 
             break;
 
-        default:
-            break;
         }
+
     }
 
     public void processKeyReleased(int keyCode) {
 
         switch (keyCode) {
+
         case KeyEvent.VK_UP:
-            System.out.println("You Released UP");
+            System.out.println("You released UP");
             break;
+
         case KeyEvent.VK_DOWN:
-            System.out.println("You Released DOWN");
+            System.out.println("You released DOWN");
             break;
+
         case KeyEvent.VK_LEFT:
-            System.out.println("You Released LEFT");
+            gameManager.megaman.setSpeedX(0);
             break;
         case KeyEvent.VK_RIGHT:
-            System.out.println("You Released RIGHT");
+            gameManager.megaman.setSpeedX(0);
             break;
+
         case KeyEvent.VK_ENTER:
 
             break;
+
         case KeyEvent.VK_SPACE:
 
             break;
@@ -58,8 +81,8 @@ public class InputManager {
 
             break;
 
-        default:
-            break;
         }
+
     }
+
 }
