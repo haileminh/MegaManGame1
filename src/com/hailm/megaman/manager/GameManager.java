@@ -13,7 +13,7 @@ public class GameManager {
 
     public GameManager() {
         megaman = new MegaMan(300, 300, 100, 100, 0.1f, this);
-        physicalMap = new PhysicalMap(0, 0);
+        physicalMap = new PhysicalMap(0, 0, this);
     }
 
     public void update() {
@@ -21,10 +21,10 @@ public class GameManager {
     }
 
     public void render(Graphics2D g2) {
-        
-        megaman.draw(g2);
+
         physicalMap.draw(g2);
-        
+        megaman.draw(g2);
+
     }
 
 }

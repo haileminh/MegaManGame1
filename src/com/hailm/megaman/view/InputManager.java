@@ -27,12 +27,10 @@ public class InputManager {
             gameManager.megaman.setDirection(MegaMan.DIR_LEFT);
             gameManager.megaman.setSpeedX(-1);
 
-            gameManager.physicalMap.posX -= 3;
             break;
         case KeyEvent.VK_RIGHT:
             gameManager.megaman.setDirection(MegaMan.DIR_RIGHT);
             gameManager.megaman.setSpeedX(1);
-            gameManager.physicalMap.posX += 3;
             break;
 
         case KeyEvent.VK_ENTER:

@@ -5,18 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.hailm.megaman.manager.CacheDataLoader;
+import com.hailm.megaman.manager.GameManager;
 
-public class PhysicalMap {
+public class PhysicalMap extends GameObject {
 
     public int[][] phys_map;
 
     private int tileSize;
 
-    public float posX, posY;
-
-    public PhysicalMap(float x, float y) {
-        this.posX = x;
-        this.posX = y;
+    public PhysicalMap(float posX, float posY, GameManager gameManager) {
+        super(posX, posY, gameManager);
         this.tileSize = 30;
         phys_map = CacheDataLoader.getInstance().getPhysicalMap();
     }
@@ -31,8 +29,8 @@ public class PhysicalMap {
         for (int i = 0; i < phys_map.length; i++)
             for (int j = 0; j < phys_map[0].length; j++)
                 if (phys_map[i][j] != 0)
-                    g2.fillRect((int) posX + j * tileSize,
-                            (int) posY + i * tileSize, tileSize, tileSize);
+                    g2.fillRect((int) getPosX() + j * tileSize,
+                            (int) getPosY() + i * tileSize, tileSize, tileSize);
 
     }
 
@@ -44,7 +42,7 @@ public class PhysicalMap {
         int posX2 = (rect.x + rect.width) / tileSize;
         posX2 += 2;
 
-        int posY = (rect.y + rect.height) / tileSize;
+        int posY1 = (rect.y + rect.height) / tileSize;
 
         if (posX1 < 0)
             posX1 = 0;
@@ -52,18 +50,24 @@ public class PhysicalMap {
         if (posX2 >= phys_map[0].length)
             posX2 = phys_map[0].length - 1;
 
-        for (int y = posY; y < phys_map.length; y++) {
+        for (int y = posY1; y < phys_map.length; y++) {
             for (int x = posX1; x <= posX2; x++) {
 
                 if (phys_map[y][x] == 1) {
-                    Rectangle r = new Rectangle((int) posY + x * tileSize,
-                            (int) posY + y * tileSize, tileSize, tileSize);
+                    Rectangle r = new Rectangle((int) getPosX() + x * tileSize,
+                            (int) getPosY() + y * tileSize, tileSize, tileSize);
                     if (rect.intersects(r))
                         return r;
                 }
             }
         }
         return null;
+    }
+
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
+
     }
 
 }
