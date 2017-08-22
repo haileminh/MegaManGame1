@@ -21,9 +21,9 @@ public class MegaMan {
 
     private float speedY;
 
-    public static int DIR_LEFT;
+    public static int LEFT_DIR;
 
-    public static int DIR_RIGHT;
+    public static int RIGHT_DIR;
 
     private int direction;
 

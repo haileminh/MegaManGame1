@@ -24,12 +24,12 @@ public class InputManager {
             break;
 
         case KeyEvent.VK_LEFT:
-            gameManager.megaman.setDirection(MegaMan.DIR_LEFT);
+            gameManager.megaman.setDirection(MegaMan.LEFT_DIR);
             gameManager.megaman.setSpeedX(-1);
 
             break;
         case KeyEvent.VK_RIGHT:
-            gameManager.megaman.setDirection(MegaMan.DIR_RIGHT);
+            gameManager.megaman.setDirection(MegaMan.RIGHT_DIR);
             gameManager.megaman.setSpeedX(1);
             break;
 
