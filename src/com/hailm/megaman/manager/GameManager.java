@@ -2,8 +2,10 @@ package com.hailm.megaman.manager;
 
 import java.awt.Graphics2D;
 
+import com.hailm.megaman.model.Camera;
 import com.hailm.megaman.model.MegaMan;
 import com.hailm.megaman.model.PhysicalMap;
+import com.hailm.megaman.view.Gui;
 
 public class GameManager {
 
@@ -11,13 +13,18 @@ public class GameManager {
 
     public PhysicalMap physicalMap;
 
+    public Camera camera;
+
     public GameManager() {
-        megaman = new MegaMan(300, 300, 100, 100, 0.1f, this);
+        megaman = new MegaMan(300, 300, this);
         physicalMap = new PhysicalMap(0, 0, this);
+        camera = new Camera(0, 0, Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME, this);
+
     }
 
     public void update() {
         megaman.update();
+        camera.update();
     }
 
     public void render(Graphics2D g2) {
