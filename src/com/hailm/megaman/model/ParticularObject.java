@@ -67,7 +67,7 @@ public abstract class ParticularObject extends GameObject {
     public void setTimeForNoBehurt(long time) {
         timeForNoBeHurt = time;
     }
-
+    
     public long getTimeForNoBeHurt() {
         return timeForNoBeHurt;
     }

@@ -27,7 +27,7 @@ public class InputManager {
             gameManager.megaman.setDirection(MegaMan.LEFT_DIR);
             gameManager.megaman.run();
             break;
-            
+
         case KeyEvent.VK_RIGHT:
             gameManager.megaman.setDirection(MegaMan.RIGHT_DIR);
             gameManager.megaman.run();
@@ -38,7 +38,10 @@ public class InputManager {
             break;
 
         case KeyEvent.VK_SPACE:
-            gameManager.megaman.jump();
+             gameManager.megaman.jump();
+
+            // gameManager.megaman.setSpeedY(-3);
+            // gameManager.megaman.setPosY(gameManager.megaman.getPosY() - 3);
             break;
         case KeyEvent.VK_A:
 

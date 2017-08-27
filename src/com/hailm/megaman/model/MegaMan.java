@@ -174,7 +174,7 @@ public class MegaMan extends Human {
                                                         .getHeight() / 2));
                     }
 
-                } else if (getIsJumping()) {
+                } else if (getIsJumping()) { 
 
                     if (getDirection() == RIGHT_DIR) {
                         flyForwardAnim.update(System.nanoTime());
@@ -349,7 +349,7 @@ public class MegaMan extends Human {
 
             break;
         }
-        
+
         drawBoundForCollisionWithMap(g2);
         // drawBoundForCollisionWithEnemy(g2);
     }
@@ -395,7 +395,6 @@ public class MegaMan extends Human {
                 flyForwardAnim.reset();
                 // setDirection(RIGHT_DIR);
             }
-
         }
     }
 
