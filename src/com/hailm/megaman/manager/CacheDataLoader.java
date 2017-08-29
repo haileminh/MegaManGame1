@@ -3,7 +3,6 @@ package com.hailm.megaman.manager;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -19,11 +18,15 @@ public class CacheDataLoader {
 
     private String physmapFile = "src/res/data/phys_map.txt";
 
+    private String backgroundmapFile = "src/res/data/background_map.txt";
+
     private Hashtable<String, FrameImage> frameImages;
 
     private Hashtable<String, Animation> animations;
 
     private int[][] phys_map;
+
+    private int[][] background_map;
 
     private CacheDataLoader() {
     }
@@ -41,10 +44,15 @@ public class CacheDataLoader {
         loadFrame();
         loadAnimation();
         loadPhysicalMap();
+        LoadBackgroundMap();
     }
 
     public int[][] getPhysicalMap() {
         return instance.phys_map;
+    }
+
+    public int[][] getBackgroundMap() {
+        return instance.background_map;
     }
 
     public void loadFrame() throws IOException {
@@ -206,5 +214,38 @@ public class CacheDataLoader {
         }
 
         br.close();
+    }
+
+    public void LoadBackgroundMap() throws IOException {
+
+        FileReader fr = new FileReader(backgroundmapFile);
+        BufferedReader br = new BufferedReader(fr);
+
+        String line = null;
+
+        line = br.readLine();
+        int numberOfRows = Integer.parseInt(line);
+        line = br.readLine();
+        int numberOfColumns = Integer.parseInt(line);
+
+        instance.background_map = new int[numberOfRows][numberOfColumns];
+
+        for (int i = 0; i < numberOfRows; i++) {
+            line = br.readLine();
+            String[] str = line.split(" |  ");
+            for (int j = 0; j < numberOfColumns; j++)
+                instance.background_map[i][j] = Integer.parseInt(str[j]);
+        }
+
+        for (int i = 0; i < numberOfRows; i++) {
+
+            for (int j = 0; j < numberOfColumns; j++)
+                System.out.print(" " + instance.background_map[i][j]);
+
+            System.out.println();
+        }
+
+        br.close();
+
     }
 }

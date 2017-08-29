@@ -106,7 +106,7 @@ public class GamePanel extends BasePanel implements Runnable {
         if (bufG2D != null) {
 
             bufG2D.setColor(Color.WHITE);
-            bufG2D.fillRect(0, 0, Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME);
+            // bufG2D.fillRect(0, 0, Gui.WIDTH_FRAME, Gui.HEIGHT_FRAME);
 
             // draw objects game here
             // megaman.draw(bufG2D);

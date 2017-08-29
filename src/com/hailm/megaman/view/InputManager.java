@@ -18,6 +18,7 @@ public class InputManager {
         switch (keyCode) {
 
         case KeyEvent.VK_UP:
+            gameManager.megaman.jump();
             break;
 
         case KeyEvent.VK_DOWN:
@@ -49,7 +50,6 @@ public class InputManager {
             break;
 
         }
-
     }
 
     public void processKeyReleased(int keyCode) {
