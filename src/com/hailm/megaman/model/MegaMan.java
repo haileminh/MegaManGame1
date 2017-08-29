@@ -174,7 +174,7 @@ public class MegaMan extends Human {
                                                         .getHeight() / 2));
                     }
 
-                } else if (getIsJumping()) { 
+                } else if (getIsJumping()) {
 
                     if (getDirection() == RIGHT_DIR) {
                         flyForwardAnim.update(System.nanoTime());
@@ -424,7 +424,37 @@ public class MegaMan extends Human {
 
     @Override
     public void attack() {
+        if (!isShooting && !getIsDicking()) {
+            Bullet bullet = new BlueFire(getPosX(), getPosY(),
+                    getGameManager());
+            if (getDirection() == LEFT_DIR) {
+                bullet.setSpeedX(-10);
+                bullet.setPosX(bullet.getPosX() - 40);
 
+                if (getSpeedX() != 0 && getSpeedY() == 0) {
+                    bullet.setPosX(bullet.getPosX() - 10);
+                    bullet.setPosY(bullet.getPosY() - 5);
+                }
+            } else {
+                bullet.setSpeedX(10);
+                bullet.setPosX(bullet.getPosX() + 40);
+
+                if (getSpeedX() != 0 && getSpeedY() == 0) {
+                    bullet.setPosX(bullet.getPosX() + 10);
+                    bullet.setPosY(bullet.getPosY() - 5);
+                }
+            }
+
+            if (getIsJumping()) {
+                bullet.setPosY(bullet.getPosY() - 20);
+            }
+
+            bullet.setTeamType(getTeamType());
+            getGameManager().bulletManager.addObject(bullet);
+
+            lastShootingTime = System.nanoTime();
+            isShooting = true;
+        }
     }
 
     @Override

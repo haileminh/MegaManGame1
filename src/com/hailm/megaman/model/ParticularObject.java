@@ -67,7 +67,7 @@ public abstract class ParticularObject extends GameObject {
     public void setTimeForNoBehurt(long time) {
         timeForNoBeHurt = time;
     }
-    
+
     public long getTimeForNoBeHurt() {
         return timeForNoBeHurt;
     }
@@ -239,5 +239,18 @@ public abstract class ParticularObject extends GameObject {
     public abstract Rectangle getBoundForCollisionWithEnemy();
 
     public abstract void draw(Graphics2D g2);
+
+    public boolean isObjectOutOfCameraView() {
+        if (getPosX()
+                - getGameManager().camera.getPosX() > getGameManager().camera
+                        .getWidthView()
+                || getPosX() - getGameManager().camera.getPosX() < -50
+                || getPosY() - getGameManager().camera
+                        .getPosY() > getGameManager().camera.getHeigthView()
+                || getPosY() - getGameManager().camera.getPosY() < -50)
+            return true;
+        else
+            return false;
+    }
 
 }

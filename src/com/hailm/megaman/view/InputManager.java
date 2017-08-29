@@ -38,13 +38,14 @@ public class InputManager {
             break;
 
         case KeyEvent.VK_SPACE:
-             gameManager.megaman.jump();
+            gameManager.megaman.jump();
 
             // gameManager.megaman.setSpeedY(-3);
             // gameManager.megaman.setPosY(gameManager.megaman.getPosY() - 3);
             break;
+            
         case KeyEvent.VK_A:
-
+            gameManager.megaman.attack();
             break;
 
         }
@@ -64,10 +65,15 @@ public class InputManager {
             break;
 
         case KeyEvent.VK_LEFT:
-            gameManager.megaman.setSpeedX(0);
+            if (gameManager.megaman.getSpeedX() < 0) {
+                gameManager.megaman.stopRun();
+            }
             break;
+
         case KeyEvent.VK_RIGHT:
-            gameManager.megaman.setSpeedX(0);
+            if (gameManager.megaman.getSpeedX() > 0) {
+                gameManager.megaman.stopRun();
+            }
             break;
 
         case KeyEvent.VK_ENTER:

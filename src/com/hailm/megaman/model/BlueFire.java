@@ -30,7 +30,7 @@ public class BlueFire extends Bullet {
                 bulletForwardAnim.setIgnoreFrame(1);
                 bulletForwardAnim.setIgnoreFrame(2);
             }
-
+            
             bulletForwardAnim.update(System.nanoTime());
             bulletForwardAnim.draw(g2d,
                     (int) (getPosX() - getGameManager().camera.getPosX()),
