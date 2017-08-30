@@ -21,5 +21,13 @@ public abstract class Bullet extends ParticularObject {
         setPosX(getPosX() + getSpeedX());
         setPosY(getPosY() + getSpeedY());
 
+        ParticularObject object = getGameManager().objectManager
+                .getCollisionWidthEnemyObject(this);
+        if (object != null && object.getState() == ALIVE) {
+            setBlood(0);
+            object.beHurt(getDamage());
+            System.out.println("Bullet set behurt for e");
+        }
+
     }
 }

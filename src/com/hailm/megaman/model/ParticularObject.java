@@ -179,8 +179,18 @@ public abstract class ParticularObject extends GameObject {
     public void update() {
         switch (state) {
         case ALIVE:
-
+            ParticularObject object = getGameManager().objectManager
+                    .getCollisionWidthEnemyObject(this);
+            if (object != null) {
+                if (object.getDamage() > 0) {
+                    System.out
+                            .println("eat damage...from collision with enemy..."
+                                    + object.getDamage());
+                    beHurt(object.getDamage());
+                }
+            }
             break;
+
         case BEHURT:
             if (behurtBackAnim == null) {
                 state = NOBEHURT;

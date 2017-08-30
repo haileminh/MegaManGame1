@@ -12,6 +12,7 @@ public class RedEyeBullet extends Bullet {
 
     public RedEyeBullet(float posX, float posY, GameManager gameManager) {
         super(posX, posY, 30, 30, 1.0f, 10, gameManager);
+        
         bulletForwardAnim = CacheDataLoader.getInstance()
                 .getAnimation("redeyebullet");
         bulletBackAnim = CacheDataLoader.getInstance()

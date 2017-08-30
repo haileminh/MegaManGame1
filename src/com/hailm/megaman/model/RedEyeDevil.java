@@ -60,7 +60,7 @@ public class RedEyeDevil extends ParticularObject {
         if (!isObjectOutOfCameraView()) {
             if (getState() == NOBEHURT
                     && (System.nanoTime() / 1000000) % 2 != 1) {
-
+                // plash
             } else {
                 if (getDirection() == LEFT_DIR) {
                     backAnim.update(System.nanoTime());
