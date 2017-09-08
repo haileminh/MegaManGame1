@@ -1,5 +1,6 @@
 package com.hailm.megaman.model;
 
+import java.applet.AudioClip;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -29,8 +30,15 @@ public class MegaMan extends Human {
 
     private boolean isShooting = false;
 
+    private AudioClip hurtingSound;
+
+    private AudioClip shooting1;
+
     public MegaMan(float x, float y, GameManager gameManager) {
         super(x, y, 70, 90, 0.1f, 100, gameManager);
+
+        shooting1 = CacheDataLoader.getInstance().getSound("bluefireshooting");
+        hurtingSound = CacheDataLoader.getInstance().getSound("megamanhurt");
 
         setTeamType(LEAGUE_TEAM);
 
@@ -425,6 +433,8 @@ public class MegaMan extends Human {
     @Override
     public void attack() {
         if (!isShooting && !getIsDicking()) {
+            shooting1.play();
+            
             Bullet bullet = new BlueFire(getPosX(), getPosY(),
                     getGameManager());
             if (getDirection() == LEFT_DIR) {
@@ -460,7 +470,7 @@ public class MegaMan extends Human {
     @Override
     public void hurtingCallback() {
         System.out.println("Call back hurting");
-
+        hurtingSound.play();
     }
 
 }

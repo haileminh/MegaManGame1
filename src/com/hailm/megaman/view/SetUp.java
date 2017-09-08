@@ -6,4 +6,5 @@ public interface SetUp {
     void addComponents();
 
     void registerListener();
+    
 }

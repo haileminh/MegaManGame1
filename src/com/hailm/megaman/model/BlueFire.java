@@ -12,7 +12,7 @@ public class BlueFire extends Bullet {
     private Animation bulletForwardAnim, bulletBackAnim;
 
     public BlueFire(float posX, float posY, GameManager gameManager) {
-        super(posX, posY, 60, 30, 1.0f, 10, gameManager);
+        super(posX, posY, 60, 30, 1.0f, 20, gameManager);
 
         bulletForwardAnim = CacheDataLoader.getInstance()
                 .getAnimation("bluefire");

@@ -11,8 +11,6 @@ import com.hailm.megaman.manager.Animation;
 import com.hailm.megaman.manager.CacheDataLoader;
 import com.hailm.megaman.manager.FrameImage;
 import com.hailm.megaman.manager.GameManager;
-import com.hailm.megaman.model.MegaMan;
-import com.hailm.megaman.model.PhysicalMap;
 
 public class GamePanel extends BasePanel implements Runnable {
 
@@ -157,6 +155,10 @@ public class GamePanel extends BasePanel implements Runnable {
             beginTime = System.nanoTime();
 
         }
+    }
+
+    public void setFocus() {
+        requestFocusInWindow();
     }
 
 }

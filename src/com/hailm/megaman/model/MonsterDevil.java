@@ -1,6 +1,5 @@
 package com.hailm.megaman.model;
 
-import java.applet.AudioClip;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -8,36 +7,48 @@ import com.hailm.megaman.manager.Animation;
 import com.hailm.megaman.manager.CacheDataLoader;
 import com.hailm.megaman.manager.GameManager;
 
-public class RedEyeDevil extends ParticularObject {
+public class MonsterDevil extends ParticularObject {
     private Animation forwardAnim, backAnim;
 
     private long startTimeToShoot;
 
-    private AudioClip shooting;
+    private float x1, x2;
 
-    public RedEyeDevil(float posX, float posY, GameManager gameManager) {
+    public MonsterDevil(float posX, float posY, GameManager gameManager) {
         super(posX, posY, 127, 89, 0, 100, gameManager);
-        setDamage(10);
         setTimeForNoBehurt(300000000);
-        backAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-        forwardAnim = CacheDataLoader.getInstance().getAnimation("redeye");
-        forwardAnim.flipAllImage();
-        startTimeToShoot = 0;
 
-        shooting = CacheDataLoader.getInstance().getSound("bluefireshooting");
+        x1 = posX - 100;
+        x2 = posY + 100;
+        setSpeedX(1);
+        setDamage(20);
+        forwardAnim = CacheDataLoader.getInstance().getAnimation("darkraise");
+        backAnim = CacheDataLoader.getInstance().getAnimation("darkraise");
+        backAnim.flipAllImage();
     }
 
     @Override
     public void attack() {
-        shooting.play();
-        Bullet bullet = new RedEyeBullet(getPosX(), getPosY(),
-                getGameManager());
-        if (getDirection() == LEFT_DIR) {
-            bullet.setSpeedX(-8);
-        } else {
-            bullet.setSpeedX(8);
-        }
+        float megaManX = getGameManager().megaman.getPosX();
+        float megaManY = getGameManager().megaman.getPosY();
 
+        float deltaX = megaManX - getPosX();
+        float deltaY = megaManY - getPosY();
+
+        float speed = 3;
+        float a = Math.abs(deltaX / deltaY);
+
+        float speedX = (float) Math.sqrt(speed * speed * a * a / (a * a + 1));
+        float speedY = (float) Math.sqrt(speed * speed / (a * a + 1));
+
+        Bullet bullet = new MonsterBullet(getPosX(), getPosY(),
+                getGameManager());
+
+        if (deltaX < 0)
+            bullet.setSpeedX(-speedX);
+        else
+            bullet.setSpeedX(speedX);
+        bullet.setSpeedY(speedY);
         bullet.setTeamType(getTeamType());
         getGameManager().bulletManager.addObject(bullet);
     }
@@ -45,9 +56,14 @@ public class RedEyeDevil extends ParticularObject {
     @Override
     public void update() {
         super.update();
-        if (System.nanoTime() - startTimeToShoot > 1000 * 1000000) {
+        if (getPosX() < x1)
+            setSpeedX(1);
+        else if (getPosX() > x2)
+            setSpeedX(-1);
+        setPosX(getPosX() + getSpeedX());
+
+        if (System.nanoTime() - startTimeToShoot > 1000 * 10000000 * 1.5) {
             attack();
-            System.out.println("red eye attack");
             startTimeToShoot = System.nanoTime();
         }
     }

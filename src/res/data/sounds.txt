@@ -1,7 +1,7 @@
 5
 
-bluefireshooting data/bluefireshooting.wav
-redeyeshooting data/redeyeshooting.wav
-bgmusic data/bgmusic.wav
-robotRshooting data/robotRshooting.wav
-megamanhurt data/megamanhurt.wav
+bluefireshooting src/res/drawable/sounds/bluefireshooting.wav
+redeyeshooting src/res/drawable/sounds/redeyeshooting.wav
+bgmusic src/res/drawable/sounds/bgmusic.wav
+robotRshooting src/res/drawable/sounds/robotRshooting.wav
+megamanhurt src/res/drawable/sounds/megamanhurt.wav

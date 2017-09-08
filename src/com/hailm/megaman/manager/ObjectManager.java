@@ -22,13 +22,13 @@ public class ObjectManager {
     public GameManager getGameManager() {
         return gameManager;
     }
-
+    
     public void addObject(ParticularObject particularObject) {
         synchronized (listParticularObjects) {
             listParticularObjects.add(particularObject);
         }
     }
-
+    
     public void removeObject(ParticularObject particularObject) {
         synchronized (listParticularObjects) {
             for (int i = 0; i < listParticularObjects.size(); i++) {
@@ -52,7 +52,7 @@ public class ObjectManager {
                         && object.getBoundForCollisionWithEnemy().intersects(
                                 objectInList.getBoundForCollisionWithEnemy())) {
                     return objectInList;
-                }
+                }   
             }
         }
         return null;
@@ -66,7 +66,7 @@ public class ObjectManager {
                 if (!object.isObjectOutOfCameraView()) {
                     object.update();
                 }
-
+                
                 if (object.getState() == ParticularObject.DEATH) {
                     listParticularObjects.remove(i);
                 }
